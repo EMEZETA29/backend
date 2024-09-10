@@ -29,9 +29,13 @@ module.exports = function (dbInyectada) {
     // Validación de email
     if (!esEmailValido(body.email)) {
         throw new Error(`Formato de email inválido para ${body.email}`);
+        }
+
     }
     
-    return db.agregar(TABLA, body);
+    function agregar(TABLA, body) {
+        return db.agregar(TABLA, body);
+    
     }
 
     
@@ -48,5 +52,5 @@ module.exports = function (dbInyectada) {
 
     }
 
-
 }
+

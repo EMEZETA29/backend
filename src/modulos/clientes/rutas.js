@@ -11,22 +11,22 @@ router.post('/', agregar);
 router.put('/', agregar);
 router.delete('/', eliminar);
 
-async function todos (req, res) {
+async function todos (req, res, next) {
     try{
         const items = await controlador.todos()
         respuesta.success(req, res, items, 200);
     }catch(err){
-        respuesta.error(req, res, err, 500);
+        next(err);
     }
 
 };
 
-async function uno (req, res) {
+async function uno (req, res, next) {
     try{
         const items = await controlador.uno(req.params.id);
         respuesta.success(req, res, items, 200);
     }catch(err){
-        respuesta.error(req, res, err, 500);
+        next(err);
     }
 
 };
@@ -34,7 +34,11 @@ async function uno (req, res) {
 async function agregar(req, res, next) {
     try {
         const items = await controlador.agregar(req.body);
-        const mensaje = req.body.id_cliente ? 'Item actualizado con éxito' : 'Item guardado con éxito';
+        if(req.body.id === 0){
+            mensaje = 'Item guardado con éxito';
+        }else{
+            mensaje = 'Item actualizado con éxito';
+        }
         respuesta.success(req, res, mensaje, 201);
     } catch (err) {
         next(err);

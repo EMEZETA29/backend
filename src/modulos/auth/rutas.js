@@ -6,19 +6,6 @@ const controlador = require('./index');
 const router = express.Router();
 
 
-router.get('/login', login);
-
-
-async function login (req, res) {
-    try{
-        const token = await controlador.login(req.body.suario, req.body.password);
-        respuesta.success(req, res, token, 200);
-    }catch(err){
-        respuesta.error(req, res, err, 500);
-    }
-
-};
 
 
 module.exports = router;
-

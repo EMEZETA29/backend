@@ -1,6 +1,6 @@
 const db = require('../../DB/mysql');
 
-const TABLA = 'auth';
+const TABLA = 'Usuario';
 
 
 module.exports = function (dbInyectada) {
@@ -11,6 +11,14 @@ module.exports = function (dbInyectada) {
         db = require('../../DB/mysql');
     }
 
+
+    function todos(){
+        return db.todos(TABLA);
+    }
+    
+    function uno(id){
+        return db.uno(TABLA, id);
+    }
 
     function esEmailValido(email) {
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,28 +38,16 @@ module.exports = function (dbInyectada) {
     
     }
 
-    function agregar(data){
-        const authData = {
-            id: data.id,
-            email: data.email,
-            password: data.password
-        }
-
-        if(data.usuario){
-            authData.usuario = data.usuario;
-        }
-
-        if(data.password){
-            authData.password = data.password;
-        }
-
-        return db.agregar(TABLA, authData);
+    
+    function eliminar(body){
+        return db.eliminar(TABLA, body);
     }
 
-
-
     return {
+        todos,
+        uno,
         agregar,
+        eliminar,
         esEmailValido
 
     }
